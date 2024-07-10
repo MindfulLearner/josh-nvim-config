@@ -5,4 +5,7 @@ require("josh.remap")
 print("Ciao learner ti do il benvenuto in NVIM")
 
 
+-- SIMPLE CONFIG LSP ZEro
+require('lsp-zero')
+require('lspconfig').intelephense.setup({})
 
