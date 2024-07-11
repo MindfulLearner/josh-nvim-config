@@ -7,6 +7,9 @@
 -Undotree permette di vedere eventual i cambiamenti di file con spazio u 
 -Fugitive permette i git push eventuali e track traccker etc.. 
 
+## Aggiunto SLP PER AUTO COM E VIM BE GOOD 
+- Impostabile non oggi ciao!
+
 ## Split di pagine
 :split filename.md "possiamo splittare orizzontalmente le apgine" 
 :vsplit "verticalmente"

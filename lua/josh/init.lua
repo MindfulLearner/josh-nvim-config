@@ -4,8 +4,6 @@ require("josh.remap")
 -- seconda attivazione per confermare la chiamata di Josh e attiva init.lua di josh contenente altre chiamate su josh.remap esempio
 print("Ciao learner ti do il benvenuto in NVIM")
 
-
--- SIMPLE CONFIG LSP ZEro
-require('lsp-zero')
-require('lspconfig').intelephense.setup({})
+-- Carica i plugin gestiti da packer
+-- require('josh.packer')
 
