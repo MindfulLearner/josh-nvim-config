@@ -28,37 +28,40 @@ return require('packer').startup(function(use)
   use ('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 -- Playgrund TREE SITTER
   use ('nvim-treesitter/playground')
--- HARPOON POWER CTRL E
+  -- HARPOON POWER CTRL E
   use ('ThePrimeagen/harpoon')
--- UNDOTREE SPAZIO U
+  -- UNDOTREE SPAZIO U
   use ('mbbill/undotree')
--- Fugitive GIT
+  -- Fugitive GIT
   use ('tpope/vim-fugitive')
--- Prime gem BEGOOD CCREATIVA FORTNITE
+  -- Prime gem BEGOOD CCREATIVA FORTNITE
   use ('ThePrimeagen/vim-be-good')
--- LSP AUTOCOMPLETION
-use {
-	'VonHeikemen/lsp-zero.nvim',
-	branch = 'v3.x',
-	requires = {
-		--- Uncomment the two plugins below if you want to manage the language servers from neovim
-		{'williamboman/mason.nvim'},
-		{'williamboman/mason-lspconfig.nvim'},
+  -- LSP AUTOCOMPLETION
+  use {
+	  'VonHeikemen/lsp-zero.nvim',
+	  branch = 'v3.x',
+	  requires = {
+		  --- Uncomment the two plugins below if you want to manage the language servers from neovim
+		  {'williamboman/mason.nvim'},
+		  {'williamboman/mason-lspconfig.nvim'},
 
-		-- LSP Support
-		{'neovim/nvim-lspconfig'},
-		-- Autocompletion
-		{'hrsh7th/nvim-cmp'},
-		{'hrsh7th/cmp-buffer'},
-		{'hrsh7th/cmp-path'},
-		{'hrsh7th/cmp-nvim-lsp'},
-		{'hrsh7th/cmp-nvim-lua'},
-		{'L3MON4D3/LuaSnip'},
-		{'saadparwaiz1/cmp_luasnip'},
-		{'rafamadriz/friendly-snippets'},
+		  -- LSP Support
+		  {'neovim/nvim-lspconfig'},
+		  -- Autocompletion
+		  {'hrsh7th/nvim-cmp'},
+		  {'hrsh7th/cmp-buffer'},
+		  {'hrsh7th/cmp-path'},
+		  {'hrsh7th/cmp-nvim-lsp'},
+		  {'hrsh7th/cmp-nvim-lua'},
+		  {'L3MON4D3/LuaSnip'},
+		  {'saadparwaiz1/cmp_luasnip'},
+		  {'rafamadriz/friendly-snippets'},
+	  }
+  }
 
-        }
-    }
+  -- screen key
+  use({ "NStefan002/screenkey.nvim", tag = "*" })
+
 end)
 
 

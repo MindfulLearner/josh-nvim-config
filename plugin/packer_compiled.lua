@@ -165,6 +165,11 @@ _G.packer_plugins = {
     path = "/home/learner/.local/share/nvim/site/pack/packer/start/rose-pine",
     url = "https://github.com/rose-pine/neovim"
   },
+  ["screenkey.nvim"] = {
+    loaded = true,
+    path = "/home/learner/.local/share/nvim/site/pack/packer/start/screenkey.nvim",
+    url = "https://github.com/NStefan002/screenkey.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/home/learner/.local/share/nvim/site/pack/packer/start/telescope.nvim",
