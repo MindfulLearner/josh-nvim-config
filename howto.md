@@ -24,6 +24,13 @@ Rose pine che cambia alcuni colori
 
 
 
+swap file si possono togliere con ls -a e vedere con -a rm rf
+c b c s c r per tmux swag
+powershell bash pacman ctf
+
+TMUX ALACRITTY NVIM I3 ARCHLINUX
+FUZZY FINDER CON FZF SU TERMINALE CTRL PER HISTORY
+SU MACBOOK COMEFARLO
 
 
 
