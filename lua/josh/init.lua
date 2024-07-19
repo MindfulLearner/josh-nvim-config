@@ -7,3 +7,5 @@ print("Ciao learner ti do il benvenuto in NVIM")
 -- Carica i plugin gestiti da packer
 -- require('josh.packer')
 
+-- settiungs nvim
+require("josh.set")
