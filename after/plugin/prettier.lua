@@ -8,7 +8,7 @@ null_ls.setup({
     },
 })
 
-vim.cmd([[autocmd BufWritePre *.js,*.ts,*.jsx,*.tsx,*.css,*.scss,*.html,*.json,*.md lua vim.lsp.buf.format()]])
+vim.cmd([[autocmd BufWritePre *.ts,*.jsx,*.tsx,*.scss,*.json,*.md lua vim.lsp.buf.format()]])
 
 
 vim.api.nvim_set_keymap("n", "<leader>p", "ggVG=", { noremap = true, silent = true })
