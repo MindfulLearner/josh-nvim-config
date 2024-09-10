@@ -9,3 +9,8 @@ print("Ciao learner ti do il benvenuto in NVIM")
 
 -- settiungs nvim
 require("josh.set")
+
+vim.api.nvim_command([[
+  autocmd FileType vue setlocal filetype=html
+]])
+
