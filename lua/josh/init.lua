@@ -10,7 +10,26 @@ print("conferma entrata su NVIM in dimanet")
 -- settiungs nvim
 require("josh.set")
 
-vim.api.nvim_command([[
-  autocmd FileType vue setlocal filetype=html
-]])
+
+
+-- setup per VUE
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.vue",
+  callback = function()
+    -- Imposta 'html' per la parte template
+    vim.api.nvim_command([[
+      syntax region vueTemplate start=+<template>+ end=+</template>+ contains=@html
+    ]])
+    
+    -- Imposta 'javascript' o 'typescript' per la parte script
+    vim.api.nvim_command([[
+      syntax region vueScript start=+<script>+ end=+</script>+ contains=@javascript
+    ]])
+    
+    -- Imposta 'css' o 'scss' per la parte style (puoi modificare in base a ciò che ti serve)
+    vim.api.nvim_command([[
+      syntax region vueStyle start=+<style>+ end=+</style>+ contains=@css
+    ]])
+  end
+})
 
