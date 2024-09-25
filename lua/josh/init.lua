@@ -16,6 +16,6 @@ require("josh.set")
 vim.api.nvim_command([[
   autocmd FileType vue setlocal filetype=html
   autocmd FileType typescript setlocal filetype=typescript
-  autocmd FileType tsx setlocal filetype=html
+  autocmd FileType tsx setlocal filetype=typescriptreact
 ]])
 
