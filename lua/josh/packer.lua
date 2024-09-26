@@ -1,75 +1,86 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+-- Inizializza e configura lsp-zero
+local lsp = require("lsp-zero")
 
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+-- Usa le impostazioni consigliate
+lsp.preset("recommended")
 
---SCARICHIAMO ATTRAVERSO REQUIRE IL PACKER PER GESTIRE I PLUGINS
-return require('packer').startup(function(use)
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+-- Carica i moduli necessari per il completamento
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 
-    -- SCARICHIAMO TELESCOPE CHE SERVIRA PER MOSTRARCI DOVE SI TROVANO FILE PAROLE E GIT
-    use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.8',
-        -- or                            , branch = '0.1.x',
-        requires = { {'nvim-lua/plenary.nvim'} }
-    }
+-- Carica i snippets di friendly-snippets
+require("luasnip.loaders.from_vscode").lazy_load()
 
-    --SCARICHIAMO ROSEPINE PER LA GRAFICA UI
-    use ({
-        'rose-pine/neovim',
-        as = 'rose-pine',
-        config = function()
-            vim.cmd('colorscheme rose-pine')
-        end
-    })
+-- Configura le opzioni di selezione del completamento
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp_mappings = cmp.mapping.preset.insert({
+  -- Mappa Ctrl-p per selezionare l'elemento precedente
+  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+  -- Mappa Ctrl-n per selezionare l'elemento successivo
+  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+  -- Mappa Ctrl-y per confermare la selezione
+  ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+  -- Mappa Ctrl-Space per completare
+  ["<C-Space>"] = cmp.mapping.complete(),
+})
 
-    -- Scarichiamo TREE SITTER PER SINTAX etc..
-    use ('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
-    -- Playgrund TREE SITTER
-    use ('nvim-treesitter/playground')
-    -- HARPOON POWER CTRL E
-    use ('ThePrimeagen/harpoon')
-    -- UNDOTREE SPAZIO U
-    use ('mbbill/undotree')
-    -- Fugitive GIT
-    use ('tpope/vim-fugitive')
-    -- Prime gem BEGOOD CCREATIVA FORTNITE
-    use ('ThePrimeagen/vim-be-good')
-    -- LSP AUTOCOMPLETION
-    use {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
-        requires = {
-            --- Uncomment the two plugins below if you want to manage the language servers from neovim
-            {'williamboman/mason.nvim'},
-            {'williamboman/mason-lspconfig.nvim'},
+-- Configura cmp
+cmp.setup({
+  -- Configura l'espansione degli snippet
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  -- Configura le mappature
+  mapping = cmp_mappings,
+  -- Configura le sorgenti di completamento
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  }, {
+    { name = 'buffer' },
+    { name = 'path' },
+    { name = 'nvim_lua' },
+  })
+})
 
-            -- LSP Support
-            {'neovim/nvim-lspconfig'},
-            -- Autocompletion
-            {'hrsh7th/nvim-cmp'},
-            {'hrsh7th/cmp-buffer'},
-            {'hrsh7th/cmp-path'},
-            {'hrsh7th/cmp-nvim-lsp'},
-            {'hrsh7th/cmp-nvim-lua'},
-            {'L3MON4D3/LuaSnip'},
-            {'saadparwaiz1/cmp_luasnip'},
-            {'rafamadriz/friendly-snippets'},
-        }
-    }
+-- Configura le mappature e le opzioni di attacco del client LSP
+lsp.on_attach(function(_, bufnr) -- Rimosso 'client' poiché non è usato
+  local opts = {buffer = bufnr, remap = false}
 
-    -- screen key
-    use({ "NStefan002/screenkey.nvim", tag = "*" })
-
-    use({
-        "jose-elias-alvarez/null-ls.nvim",
-        requires = { "nvim-lua/plenary.nvim" }
-    })
-
-
+  -- Mappa gd per andare alla definizione
+  vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+  -- Mappa K per mostrare la documentazione
+  vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+  -- Mappa <leader>vws per simboli del workspace
+  vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+  -- Mappa <leader>vd per aprire il floating diagnostic
+  vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+  -- Mappa [d per andare al diagnostic successivo
+  vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
+  -- Mappa ]d per andare al diagnostic precedente
+  vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+  -- Mappa <leader>vca per azioni di codice
+  vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+  -- Mappa <leader>vrr per riferimenti
+  vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+  -- Mappa <leader>vrn per rinominare
+  vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
+  -- Mappa Ctrl-h in insert mode per l'aiuto della firma
+  vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
 
+-- Configura mason per gestire l'installazione dei server LSP
+require('mason').setup({})
 
+-- Configura mason-lspconfig per usare la configurazione predefinita
+require('mason-lspconfig').setup({
+  handlers = {
+    lsp.default_setup,
+  },
+})
 
+-- Applica la configurazione
+lsp.setup()
 
