@@ -76,15 +76,24 @@ end)
 
 -- Configura mason per gestire l'installazione dei server LSP
 require('mason').setup({})
--- Configura mason-lspconfig per gestire l'installazione dei server LSP
-require('mason-lspconfig').setup({
-  -- Specifica quali server LSP devono essere installati
-  ensure_installed = { 'html', 'cssls', 'lua_ls' },
-  -- Usa la configurazione predefinita per ogni server LSP
-  handlers = {
-    lsp.default_setup,
-  },
+
+-- Configura mason-lspconfig per usare la configurazione predefinita
+require("mason-lspconfig").setup({
+    -- Disabilita ensure_installed per non installare automaticamente server
+    automatic_installation = true, -- Installa automaticamente server LSP quando li imposti
 })
+
+-- Richiama LSPconfig
+local lspconfig = require("lspconfig")
+
+-- Configura automaticamente tutti i server installati tramite Mason
+require("mason-lspconfig").setup_handlers({
+    function(server_name)  -- La funzione predefinita per configurare tutti i server
+        lspconfig[server_name].setup{}
+    end
+})
+
+
 
 -- Applica la configurazione
 lsp.setup()

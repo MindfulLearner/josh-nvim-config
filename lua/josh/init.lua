@@ -12,4 +12,13 @@ require("josh.set")
 
 
 
+<<<<<<< HEAD
+=======
+-- setup per vue 
+vim.api.nvim_command([[
+  autocmd FileType vue setlocal filetype=html
+  autocmd FileType typescript setlocal filetype=typescript
+  autocmd FileType tsx setlocal filetype=typescriptreact
+]])
+>>>>>>> 94e06363c1fed9f1adb83f1f0f379b0638f47f63
 
