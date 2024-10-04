@@ -9,7 +9,10 @@ local cmp = require('cmp')
 local luasnip = require('luasnip')
 
 -- Carica i snippets di friendly-snippets
+--
 require("luasnip.loaders.from_vscode").lazy_load()
+
+
 
 -- Configura le opzioni di selezione del completamento
 local cmp_select = {behavior = cmp.SelectBehavior.Select}

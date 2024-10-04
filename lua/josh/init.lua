@@ -12,8 +12,4 @@ require("josh.set")
 
 
 
--- setup per vue 
-vim.api.nvim_command([[
-  autocmd FileType vue setlocal filetype=html
-]])
 
